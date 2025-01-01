@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verilog - Installation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --dark-purple: #4E4464;
+            --deep-blue: #303F64;
+            --soft-blue: #8097A9;
+            --light-cream: #E9E1D6;
+            --muted-gray: #555553;
+            --bg-light: #FFFFFF;
+            --bg-dark: #1C1C1C;
+            --text-light: #E9E1D6;
+            --text-dark: #4E4464;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+            transition: background-color 0.5s ease;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background-color: var(--deep-blue);
+            color: var(--light-cream);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+        }
+
+        .sidebar h2 {
+            font-size: 1.5em;
+            margin: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--soft-blue);
+            text-align: left;
+            width: 100%; /* Ensure the line spans the full width */
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align menu items to the left */
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: var(--light-cream);
+            font-size: 1.1em;
+            display: block;
+            padding: 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: var(--soft-blue);
+        }
+
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+            background-color: var(--bg-light);
+            flex-grow: 1;
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeInContent 0.5s forwards;
+        }
+
+        /* Section Fade Animation */
+        @keyframes fadeInContent {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--deep-blue);
+            color: var(--light-cream);
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+            z-index: 100;
+        }
+
+        .dark-mode-toggle:hover {
+            background-color: var(--soft-blue);
+        }
+
+        /* Dark Mode */
+        body.dark-mode .sidebar {
+            background-color: var(--dark-purple);
+        }
+
+        body.dark-mode .content {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+        }
+
+        body.dark-mode .sidebar ul li a {
+            color: var(--text-light);
+        }
+
+        body.dark-mode .sidebar ul li a:hover {
+            background-color: var(--muted-gray);
+        }
+
+        section {
+            display: none;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        section h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        section p {
+            font-size: 1.1em;
+        }
+
+        ol {
+            padding-left: 20px;
+        }
+
+        ol li {
+            margin: 10px 0;
+        }
+
+        /* Active menu item */
+        .sidebar ul li a.active {
+            background-color: var(--soft-blue);
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Code Block Styles */
+        .code-block {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            font-family: 'Courier New', Courier, monospace;
+            position: relative;
+        }
+
+       .code-block {
+            background-color: var(--code-bg-light);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            font-family: 'Courier New', Courier, monospace;
+            position: relative;
+            color: var(--code-text-light);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .code-block code {
+            font-size: 1em;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: inherit;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 5px 10px;
+            background-color: var(--deep-blue);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--soft-blue);
+        }
+
+        .copy-btn:focus {
+            outline: none;
+        }
+
+        .copy-btn:active {
+            background-color: var(--dark-purple);
+        }
+
+        /* Dark Mode Styles for Code Blocks */
+        body.dark-mode .code-block {
+            background-color: var(--code-bg-dark);
+            color: var(--code-text-dark);
+        }
+
+        body.dark-mode .copy-btn {
+            background-color: var(--soft-blue);
+            color: var(--bg-dark);
+        }
+
+        body.dark-mode .copy-btn:hover {
+            background-color: var(--light-cream);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Tutorial</h2>
+        <ul>
+            <li><a href="#" onclick="showSection('gettingStarted', this)">Getting Started</a></li>
+            <li><a href="#" onclick="showSection('installation', this)">Installation</a></li>
+            <li><a href="#" onclick="showSection('basics', this)">Basics</a></li>
+            <li><a href="#" onclick="showSection('advancedTopics', this)">Advanced Topics</a></li>
+            <li><a href="#" onclick="showSection('examples', this)">Examples</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <header>
+            <div class="dark-mode-toggle" onclick="toggleDarkMode()">
+                <span id="mode-icon">🌙</span>
+            </div>
+        </header>
+
+        <main>
+            <section id="gettingStarted">
+                <h2>Getting Started</h2>
+                <p>This webpage is designed to help you start learning Verilog and setting up Vivado.</p>
+            </section>
+
+            <section id="installation">
+                <h1>Verilog Installation Guide</h1>
+                <p>Follow these steps to install Vivado and set up your Verilog environment:</p>
+                <ol>
+                    <li>Open your preferred browser (Chrome or Edge) and navigate to the following link: <a href="https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools.html" target="_blank">Xilinx Vivado Download</a>.</li>
+                    <li>If you do not have an account, you will need to create one. If you already have an account, simply log in.</li>
+                    <li>Once logged in, download the Vivado installer for your operating system (Windows/Linux).</li>
+                    <li>After the download is complete, open the file manager and run the installer setup file.</li>
+                    <li>During the installation, select the *ML Standard* edition. This edition includes all necessary tools for Verilog development.</li>
+                    <li>The installer will prompt you to install additional files (approximately 22GB). It is recommended that you do not untick any of the default selections to ensure that all required components are installed.</li>
+                    <li>Installation may take some time depending on your internet speed and system performance. Please be patient as the process completes.</li>
+                    <li>Once the installation is finished, you will be ready to start using Vivado for Verilog development.</li>
+                    
+                    
+                <h1>Screenshots Of Package Selection & Installation Procedures</h1>
+                  
+                    <img src="Screenshot 2024-12-28 201626.png" alt="Screenshot" style="max-width: 100%; height: auto;" />
+                    <img src="Screenshot 2024-12-29 164659.png" alt="Screenshot" style="max-width: 100%; height: auto;" />
+                    <img src="Screenshot 2024-12-29 164720.png" alt="Screenshot" style="max-width: 100%; height: auto;" />
+                    <img src="Screenshot 2024-12-29 164734.png" alt="Screenshot" style="max-width: 100%; height: auto;" />
+                    <img src="Screenshot 2024-12-29 164752.png" alt="Screenshot" style="max-width: 100%; height: auto;" />
+                    <img src="Screenshot 2024-12-29 164940.png" alt="Screenshot" style="max-width: 100%; height: auto;" />
+                    <img src="Screenshot 2024-12-29 171622.png" alt="Screenshot" style="max-width: 100%; height: auto;" />
+                    <img src="Screenshot 2024-12-29 172631.png" alt="Screenshot" style="max-width: 100%; height: auto;" />
+                    <img src="Screenshot 2024-12-29 172829.png" alt="Screenshot" style="max-width: 100%; height: auto;" />
+                </ol>
+            </section>
+
+            <section id="basics">
+                <h2>Basics of Verilog</h2>
+                <p>This section covers the fundamentals of Verilog, including syntax, data types, and modules.</p>
+                <h3>Syntax</h3>
+                <p>Verilog syntax follows standard conventions:</p>
+                <ul>
+                    <li><strong>Comments</strong>: Single-line (//) and multi-line (/*...*/).</li>
+                </ul>
+                </head>
+                <h3>Data Types</h3>
+                <ul>
+                    <li><strong>Registers</strong>: Store values.
+                        <ul>
+                            <li><code>reg</code>: Holds its value until changed.</li>
+                        </ul>
+                        <div class="code-block">
+                            <code>
+reg [7:0] data; // 8-bit register
+                            </code>
+                            <button class="copy-btn" onclick="copyToClipboard('reg [7:0] data; // 8-bit register')">Copy</button>
+                        </div>
+                    </li>
+                </ul>
+
+                <h3>Modules</h3>
+                <p>Modules are the building blocks in Verilog. A typical module definition includes ports, internal variables, assignments, and always blocks.</p>
+
+                <ul>
+                    <li><strong>Module Definition</strong>:
+                        <div class="code-block">
+                            <code>
+module module_name (port_list);
+    // Port Declarations
+    // Internal Variables
+    // Continuous Assignments
+    // Always Blocks
+endmodule
+                            </code>
+                            <button class="copy-btn" onclick="copyToClipboard('module module_name (port_list); // Port Declarations // Internal Variables // Continuous Assignments // Always Blocks endmodule')">Copy</button>
+
+                        </div>
+                    </li>
+                    <li><strong>Example - AND Gate</strong>:
+                        <div class="code-block">
+                            <code>
+module and_gate (output wire y, input wire a, b);
+    assign y = a & b; // Continuous assignment
+endmodule
+                            </code>
+                            <button class="copy-btn" onclick="copyToClipboard('module and_gate ...')">Copy</button>
+                        </div>
+                    </li>
+                </ul>
+
+                <h3>Functions</h3>
+                <p>For repetitive code, functions cannot contain timing controls:</p>
+                <div class="code-block">
+                    <code>
+function [3:0] func_name;
+    input [3:0] a;
+    // Function Body
+endfunction
+                    </code>
+                    <button class="copy-btn" onclick="copyToClipboard('function [3:0] func_name; ...')">Copy</button>
+                </div>
+
+                <h3>Parameterization</h3>
+                <p>Reusable and configurable modules using parameters:</p>
+                <div class="code-block">
+                    <code>
+module param_module #(parameter WIDTH = 8) (input [WIDTH-1:0] in, output [WIDTH-1:0] out);
+    // Module Body
+endmodule
+                    </code>
+                    <button class="copy-btn" onclick="copyToClipboard('module param_module #(parameter WIDTH = 8) ...')">Copy</button>
+                </div>
+
+                <h3>Generate Statements</h3>
+                <p>Used for creating multiple instances of a module or block of code:</p>
+                <div class="code-block">
+                    <code>
+genvar i;
+generate
+    for (i = 0; i < 8; i = i + 1) begin : loop_label
+        // Module instances or statements
+    end
+endgenerate
+                    </code>
+                    <button class="copy-btn" onclick="copyToClipboard('genvar i; generate ...')">Copy</button>
+                </div>
+
+                <h3>Initial Blocks</h3>
+                <p>Used for initializing variables and running simulation-only code:</p>
+                <div class="code-block">
+                    <code>
+initial begin
+    // Initialization statements
+end
+                    </code>
+                    <button class="copy-btn" onclick="copyToClipboard('initial begin ...')">Copy</button>
+                </div>
+
+                <h3>Delays</h3>
+                <p>Introduce delays in assignments:</p>
+                <div class="code-block">
+                    <code>
+assign #5 out = in; // 5 time units delay
+                    </code>
+                    <button class="copy-btn" onclick="copyToClipboard('assign #5 out = in;')">Copy</button>
+                </div>
+
+                <h3>Continuous Assignments</h3>
+                <p>For combinational logic:</p>
+                <div class="code-block">
+                    <code>
+assign y = a & b;
+                    </code>
+                    <button class="copy-btn" onclick="copyToClipboard('assign y = a & b;')">Copy</button>
+                </div>
+
+                <h3>Blocking vs. Non-blocking Assignments</h3>
+                <p>Blocking (=) executes sequentially, Non-blocking (<=) executes in parallel.</p>
+                <div class="code-block">
+                    <code>
+a = b;  // Blocking
+                    </code>
+                    <button class="copy-btn" onclick="copyToClipboard('a = b;')">Copy</button>
+                </div>
+                <div class="code-block">
+                    <code>
+a <= b; // Non-blocking
+                    </code>
+                    <button class="copy-btn" onclick="copyToClipboard('a <= b;')">Copy</button>
+                </div>
+            </section>
+
+            <section id="advancedTopics">
+                <h2>Advanced Topics in Verilog</h2>
+                <p>Coming soon! Stay tuned for more information.</p>
+            </section>
+
+            <section id="examples">
+                <h2>Verilog Examples</h2>
+                <p>Explore some basic and advanced Verilog examples to deepen your understanding.</p>
+                <!-- Changes area -->
+            
+
+                ```html
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Verilog Module Solutions</title>
+                    <style>
+                        .copy-button {
+                            display: inline-block;
+                            margin-left: 10px;
+                            padding: 5px 10px;
+                            background-color: #007bff;
+                            color: white;
+                            border: none;
+                            cursor: pointer;
+                            border-radius: 5px;
+                        }
+                        .copy-button:hover {
+                            background-color: #0056b3;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>Solutions to Basic Programming Problems using Verilog</h1>
+                
+                    <h2>Basic Arithmetic Operations</h2>
+                    <div>
+                        <h2>Problem 1: Basic Arithmetic Operations</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code1">
+                            module add_sub_mul_div(a, b, c);
+                                input [31:0] a;
+                                input [31:0] b;
+                                input [31:0] c;
+                
+                                output reg c;
+                
+                                assign c = a + b + c;
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code1')">Copy</button>
+                    </div>
+                
+                    <h2>Conditional Statements</h2>
+                    <div>
+                        <h2>Problem 2: Conditional Statements</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code2">
+                            module if_else(a, b, condition);
+                                input [31:0] a;
+                                input [31:0] b;
+                                input [1:0] condition;
+                
+                                output reg result;
+                                always @(*) begin
+                                    if (condition)
+                                        result = 10;
+                                    else
+                                        result = a + b;
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code2')">Copy</button>
+                    </div>
+                
+                    <h2>Loops</h2>
+                    <div>
+                        <h2>Problem 3: Loops</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code3">
+                            module loop_example(arr, n);
+                                input [31:0] arr;
+                                input [2:0] n;
+                
+                                output reg result;
+                                always @(*) begin
+                                    for (int i = 0; i < n; i++)
+                                        result[i] = arr[i];
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code3')">Copy</button>
+                    </div>
+                
+                    <h2>Switch Statements</h2>
+                    <div>
+                        <h2>Problem 4: Switch Statements</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code4">
+                            module if_switch(a, b);
+                                input [31:0] a;
+                                input [31:0] b;
+                
+                                output reg result;
+                                always @(*) begin
+                                    case (a)
+                                        5: result = 'A';
+                                        1: result = 'B';
+                                        default: result = 10;
+                                    endcase
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code4')">Copy</button>
+                    </div>
+                
+                    <h2>Arrays</h2>
+                    <div>
+                        <h2>Problem 5: Arrays</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code5">
+                            module array_example(arr);
+                                input [31:0] arr;
+                
+                                output reg [31:0] result;
+                                always @(*) begin
+                                    for (int i = 1; i < 10; i++)
+                                        result[i] = arr[i];
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code5')">Copy</button>
+                    </div>
+                
+                    <h2>Strings</h2>
+                    <div>
+                        <h2>Problem 6: Strings</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code6">
+                            module string_example(str);
+                                input [31:0] str;
+                
+                                output reg string_result;
+                                always @(*) begin
+                                    if (str[0] == 'A')
+                                        string_result = 10;
+                                    else
+                                        for (int i = 1; i < 10; i++)
+                                            string_result = string_result + str[i];
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code6')">Copy</button>
+                    </div>
+                
+                    <h2>Control Flow</h2>
+                    <div>
+                        <h2>Problem 7: Control Flow</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code7">
+                            module if_else_and_loop(a, b, condition);
+                                input [31:0] a;
+                                input [31:0] b;
+                                input [1:0] condition;
+                
+                                output reg result;
+                                always @(*) begin
+                                    if (condition)
+                                        result = 10;
+                                    else
+                                        for (int i = 0; i < 10; i++)
+                                            result = result + a[i];
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code7')">Copy</button>
+                    </div>
+                
+                    <h2>Clock Domains</h2>
+                    <div>
+                        <h2>Problem 8: Clock Domains</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code8">
+                            module clock_domain_example(clk);
+                                input clk;
+                                output reg [31:0] data;
+                
+                                always @(*) begin
+                                    data = (clk <= '1') ? 10 : 'A';
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code8')">Copy</button>
+                    </div>
+                
+                    <h2>Bitwise Operations</h2>
+                    <div>
+                        <h2>Problem 9: Bitwise Operations</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code9">
+                            module bitwise_operations;
+                                input [31:0] a;
+                                input [31:0] b;
+                
+                                output reg result;
+                
+                                always @(*) begin
+                                    result = (a[2:1]) ^ (b[2:1]);
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code9')">Copy</button>
+                    </div>
+                
+                    <h2>Bitwise XOR and OR Operations</h2>
+                    <div>
+                        <h2>Problem 10: Bitwise XOR and OR Operations</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code10">
+                            module bitwise_xor_or(a, b);
+                                input [31:0] a;
+                                input [31:0] b;
+                
+                                output reg result;
+                
+                                always @(*) begin
+                                    if (a[2:1]) // Bitwise XOR operation
+                                        result = 10;
+                                    else if (b[2:1]) // Bitwise OR operation
+                                        result = 20;
+                                    else
+                                        for (int i = 0; i < 5; i++)
+                                            result[i] = a[i];
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code10')">Copy</button>
+                    </div>
+                
+                    <h2>Arithmetic Operations</h2>
+                    <div>
+                        <h2>Problem 11: Arithmetic Operations</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code11">
+                            module add_sub_mul_div(a, b, c);
+                                input [31:0] a;
+                                input [31:0] b;
+                                input [31:0] c;
+                
+                                output reg c;
+                
+                                assign c = a + b + c;
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code11')">Copy</button>
+                    </div>
+                
+                    <h2>Bitwise AND, OR, and XOR Operations</h2>
+                    <div>
+                        <h2>Problem 12: Bitwise AND, OR, and XOR Operations</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code12">
+                            module bitwise_operations;
+                                input [31:0] a;
+                                input [31:0] b;
+                
+                                output reg result;
+                
+                                always @(*) begin
+                                    result = (a[2:1]) & (b[2:1]);
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code12')">Copy</button>
+                    </div>
+                
+                    <h2>Bitwise Shift Operations</h2>
+                    <div>
+                        <h2>Problem 13: Bitwise Shift Operations</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code13">
+                            module bitwise_shift;
+                                input [31:0] a;
+                                input [31:0] b;
+                
+                                output reg result;
+                
+                                always @(*) begin
+                                    result = (a << 1) | (b[2:1]);
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code13')">Copy</button>
+                    </div>
+                
+                    <h2>Conditional Statements with Bitwise Operations</h2>
+                    <div>
+                        <h2>Problem 14: Conditional Statements with Bitwise Operations</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code14">
+                            module if_else_bitwise_or(a, b);
+                                input [31:0] a;
+                                input [31:0] b;
+                
+                                output reg result;
+                
+                                always @(*) begin
+                                    if (a > 5)
+                                        result = 'A';
+                                    else
+                                        for (int i = 1; i < 10; i++)
+                                            result[i] = a[i];
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code14')">Copy</button>
+                    </div>
+                
+                    <h2>Conditional Statements with Bitwise XOR and OR Operations</h2>
+                    <div>
+                        <h2>Problem 15: Conditional Statements with Bitwise XOR and OR Operations</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code15">
+                            module if_else_bitwise_xor(a, b);
+                                input [31:0] a;
+                                input [31:0] b;
+                
+                                output reg result;
+                
+                                always @(*) begin
+                                    if (a[2:1]) // Bitwise XOR operation
+                                        result = 10;
+                                    else if (b[2:1]) // Bitwise OR operation
+                                        result = 20;
+                                    else
+                                        for (int i = 0; i < 5; i++)
+                                            result[i] = a[i];
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code15')">Copy</button>
+                    </div>
+                
+                    <h2>Bitwise AND, OR, and XOR Operations with Conditional Statements</h2>
+                    <div>
+                        <h2>Problem 16: Bitwise AND, OR, and XOR Operations with Conditional Statements</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code16">
+                            module if_else_bitwise_and_or(a, b);
+                                input [31:0] a;
+                                input [31:0] b;
+                
+                                output reg result;
+                
+                                always @(*) begin
+                                    if (a > 5)
+                                        result = 'A';
+                                    else
+                                        for (int i = 1; i < 10; i++)
+                                            result[i] = a[i];
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code16')">Copy</button>
+                    </div>
+                
+                    <h2>Arithmetic Operations with Conditional Statements</h2>
+                    <div>
+                        <h2>Problem 17: Arithmetic Operations with Conditional Statements</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code17">
+                            module add_sub_mul_div_and_c(a, b, c);
+                                input [31:0] a;
+                                input [31:0] b;
+                                input [31:0] c;
+                
+                                output reg result;
+                
+                                always @(*) begin
+                                    if (a > 5)
+                                        result = 'A';
+                                    else if (c > 10) // Bitwise AND operation
+                                        result = 20;
+                                    else
+                                        for (int i = 0; i < 10; i++)
+                                            result[i] = a[i];
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code17')">Copy</button>
+                    </div>
+                
+                    <h2>Bitwise Shift and XOR Operations with Conditional Statements</h2>
+                    <div>
+                        <h2>Problem 18: Bitwise Shift and XOR Operations with Conditional Statements</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code18">
+                            module bitwise_shift_xor;
+                                input [31:0] a;
+                                input [31:0] b;
+                
+                                output reg result;
+                
+                                always @(*) begin
+                                    result = (a << 1) ^ (b[2:1]);
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code18')">Copy</button>
+                    </div>
+                
+                    <h2>Bitwise AND, OR, and XOR Operations with Conditional Statements and Bitwise Shift</h2>
+                    <div>
+                        <h2>Problem 19: Bitwise AND, OR, and XOR Operations with Conditional Statements and Bitwise Shift</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code19">
+                            module bitwise_and_xor_shift;
+                                input [31:0] a;
+                                input [31:0] b;
+                
+                                output reg result;
+                
+                                always @(*) begin
+                                    result = (a[2:1]) & (b << 1) | (b[2:1]);
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code19')">Copy</button>
+                    </div>
+                
+                    <h2>Bitwise Shift and XOR Operations with Conditional Statements, Bitwise AND Operation, and Bitwise OR Operation</h2>
+                    <div>
+                        <h2>Problem 20: Bitwise Shift and XOR Operations with Conditional Statements, Bitwise AND Operation, and Bitwise OR Operation</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code20">
+                            module bitwise_shift_xor_and_or;
+                                input [31:0] a;
+                                input [31:0] b;
+                
+                                output reg result;
+                
+                                always @(*) begin
+                                    result = (a << 1) ^ (b[2:1]) | (a[2:1]);
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code20')">Copy</button>
+                    </div>
+                
+                    <h2>Bitwise AND, OR, and XOR Operations with Conditional Statements, Bitwise Shift Operation, and Bitwise AND Operation</h2>
+                    <div>
+                        <h2>Problem 21: Bitwise AND, OR, and XOR Operations with Conditional Statements, Bitwise Shift Operation, and Bitwise AND Operation</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code21">
+                            module bitwise_and_xor_shift_and;
+                                input [31:0] a;
+                                input [31:0] b;
+                
+                                output reg result;
+                
+                                always @(*) begin
+                                    result = (a[2:1]) & (b << 1) | (b[2:1]);
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code21')">Copy</button>
+                    </div>
+                
+                    <h2>Bitwise XOR Operation with Conditional Statements, Bitwise AND Operation, and Bitwise OR Operation</h2>
+                    <div>
+                        <h2>Problem 22: Bitwise XOR Operation with Conditional Statements, Bitwise AND Operation, and Bitwise OR Operation</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code22">
+                            module bitwise_xor_and_or;
+                                input [31:0] a;
+                                input [31:0] b;
+                
+                                output reg result;
+                
+                                always @(*) begin
+                                    result = (a[2:1]) ^ ((b << 1) | (b[2:1]));
+                                end
+                
+                            endmodule
+                        </pre>
+                        <button class="copy-button" onclick="copyToClipboard('code22')">Copy</button>
+                    </div>
+                
+                    <h2>Conditional Statements and Bitwise Operations with Arithmetic Operations</h2>
+                    <div>
+                        <h2>Problem 23: Conditional Statements and Bitwise Operations with Arithmetic Operations</h2>
+                        <p>Solution:</p>
+                        <pre class="verilog" id="code23">
+                            module arithmetic_operations_with_conditional;
+                                input [31:0] a;
+                                input [31:0] b;
+                
+                                output reg result;
+                
+                                always @(*) begin
+                                    if (a > 5)
+                                        result = 'A';
+                                    else if (b > 10) // Bitwise AND operation
+                                        result = 20;
+                                    else
+                                        for (int i = 0; i < 10; i++)
+                                            result[i] = a
+<!--changes above the area -->
+
+    <!-- PrismJS Styles for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.css" rel="stylesheet" />
+
+    <!-- PrismJS Script for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-verilog.min.js"></script>
+
+    <script>
+        function showSection(sectionId, element) {
+            let sections = document.querySelectorAll('section');
+            let links = document.querySelectorAll('.sidebar ul li a');
+
+            // Hide all sections
+            sections.forEach(section => section.style.display = 'none');
+
+            // Remove active class from all links
+            links.forEach(link => link.classList.remove('active'));
+
+            // Show the clicked section and add active class to the link
+            document.getElementById(sectionId).style.display = 'block';
+            element.classList.add('active');
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            let icon = document.getElementById('mode-icon');
+            icon.innerText = document.body.classList.contains('dark-mode') ? '🌞' : '🌙';
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text)
+                .then(() => alert('Code copied to clipboard!'))
+                .catch(err => console.error('Failed to copy text: ', err));
+        }
+
+        // Show the Getting Started section by default
+        showSection('gettingStarted', document.querySelector('.sidebar ul li a'));
+    </script>
+<script>
+    // Toggle dark mode and save preference in localStorage
+    function toggleDarkMode() {
+        const isDarkMode = document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+        updateModeIcon(isDarkMode);
+    }
+
+    
+    function updateModeIcon(isDarkMode) {
+        const icon = document.getElementById('mode-icon');
+        icon.innerText = isDarkMode ? '🌞' : '🌙';
+    }
+
+    
+    function applySavedMode() {
+        const darkModeStatus = localStorage.getItem('darkMode');
+        if (darkModeStatus === 'enabled') {
+            document.body.classList.add('dark-mode');
+        }
+        updateModeIcon(document.body.classList.contains('dark-mode'));
+    }
+
+   
+    document.addEventListener('DOMContentLoaded', applySavedMode);
+</script>
+<script>
+    
+    function toggleDarkMode() {
+        const isDarkMode = document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+        updateModeIcon(isDarkMode);
+    }
+
+    
+    function updateModeIcon(isDarkMode) {
+        const icon = document.getElementById('mode-icon');
+        icon.innerText = isDarkMode ? '🌞' : '🌙';
+    }
+
+   
+    function applySavedMode() {
+        const darkModeStatus = localStorage.getItem('darkMode');
+        if (darkModeStatus === 'enabled') {
+            document.body.classList.add('dark-mode');
+        }
+        updateModeIcon(document.body.classList.contains('dark-mode'));
+    }
+
+    
+    document.addEventListener('DOMContentLoaded', applySavedMode);
+</script>
+<script>
+    
+    function toggleDarkMode() {
+        const isDarkMode = document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+        updateModeIcon(isDarkMode);
+    }
+
+   
+    function updateModeIcon(isDarkMode) {
+        const icon = document.getElementById('mode-icon');
+        icon.innerText = isDarkMode ? '🌞' : '🌙';
+    }
+
+    
+    function applySavedMode() {
+        const darkModeStatus = localStorage.getItem('darkMode');
+        if (darkModeStatus === 'enabled') {
+            document.body.classList.add('dark-mode');
+        }
+        updateModeIcon(document.body.classList.contains('dark-mode'));
+    }
+
+
+    document.addEventListener('DOMContentLoaded', applySavedMode);
+</script>
+
+</body>
+</html>

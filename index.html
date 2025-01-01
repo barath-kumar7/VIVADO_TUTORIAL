@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Verilog Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --dark-purple: #4E4464;
+            --deep-blue: #303F64;
+            --soft-blue: #8097A9;
+            --light-cream: #E9E1D6;
+            --muted-gray: #555553;
+            --shadow-light: rgba(0, 0, 0, 0.2);
+            --shadow-dark: rgba(0, 0, 0, 0.5);
+            --bg-light: #FFFFFF;
+            --bg-dark: #1C1C1C;
+            --text-light: #E9E1D6;
+            --text-dark: #4E4464;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-cream);
+            color: var(--dark-purple);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        header {
+            padding: 20px;
+            background-color: var(--deep-blue);
+            color: var(--light-cream);
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 6px var(--shadow-dark);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2em;
+            margin: 10px 0;
+            font-weight: 300;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            text-decoration: none;
+            color: var(--light-cream);
+            font-size: 1.5em;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--soft-blue);
+            transform: scale(1.2);
+        }
+
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--deep-blue);
+            color: var(--light-cream);
+            border-radius: 50%;
+            padding: 12px;
+            box-shadow: 0 4px 8px var(--shadow-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        .dark-mode-toggle:hover {
+            background-color: var(--soft-blue);
+            transform: scale(1.1);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
+            gap: 30px;
+            background-color: var(--bg-light);
+            transition: background-color 0.5s ease;
+        }
+
+        body.dark-mode {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+        }
+
+        body.dark-mode header {
+            background-color: var(--dark-purple);
+            color: var(--text-light);
+        }
+
+        body.dark-mode .social-icons a {
+            color: var(--text-light);
+        }
+
+        body.dark-mode main {
+            background-color: var(--bg-dark);
+        }
+
+        footer {
+            background-color: var(--muted-gray);
+            color: var(--light-cream);
+            padding: 15px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        .start-learning button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            color: var(--light-cream);
+            background-color: var(--dark-purple);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 6px 10px var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+
+        .start-learning button:hover {
+            background-color: var(--soft-blue);
+            transform: translateY(-5px);
+        }
+
+        .intro {
+            max-width: 800px;
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px var(--shadow-light);
+            transition: background-color 0.5s ease;
+        }
+
+        .intro h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: var(--deep-blue);
+        }
+
+        .intro p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: var(--muted-gray);
+        }
+
+        body.dark-mode .intro {
+            background: var(--bg-dark);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Barath Kumar</h1>
+        <p>Third-Year ECE Student | Passionate about Hardware Design & Verilog Programming</p>
+        <div class="social-icons">
+            <a href="https://www.linkedin.com/in/barathkumar7/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/barath-kumar7" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+    </header>
+    <main>
+        <div class="intro">
+            <h2>What is Verilog?</h2>
+            <p>Verilog is a hardware description language used to model electronic systems. It allows engineers to design, simulate, and test digital circuits before building them physically.</p>
+            <h2>Why Learn Verilog?</h2>
+            <p>Learning Verilog opens up opportunities in cutting-edge technologies like FPGA development and hardware accelerators.</p>
+        </div>
+        <div class="start-learning">
+            <button onclick="window.location.href='tutorial.html'">Start Learning</button>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Barath Kumar</p>
+    </footer>
+
+    
+    <div class="dark-mode-toggle" onclick="toggleDarkMode()">
+        <span id="mode-icon">🌙</span> <!-- Moon icon for dark mode -->
+    </div>
+
+    <script>
+       
+        if(localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const modeIcon = document.getElementById('mode-icon');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                modeIcon.textContent = '🌞';  // Sun icon for light mode
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                modeIcon.textContent = '🌙';  // Moon icon for dark mode
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+    </script>
+</body>
+</html>
